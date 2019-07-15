@@ -14,12 +14,12 @@ module.exports = {
   collect: () => {
     let metrics = [];
 
-    let cpu = cpuUsage();
+    let cpu = cpuUsage.sense();
     if (cpu) {
-      metrics = metrics.concat(adapters.metric.cpuUsage(cpuUsage()));
+      metrics = metrics.concat(adapters.metric.cpuUsage(cpu));
     }
 
-    let mem = memoryUsage();
+    let mem = memoryUsage.sense();
     if (mem) {
       metrics = metrics.concat(adapters.metric.memoryUsage(mem));
     }

@@ -53,11 +53,15 @@ module.exports.metric = {
   },
   http: request => {
     const prefix = `${METRIC_FAMILY}.http`;
+    const dimensions = Object.assign({}, basicDimensions, {
+      method: request.method ? request.method : 'unknown',
+      route: request.route ? request.route : 'unknown'
+    });
     return [
-      getMetricObject('counter', `${prefix}.rq_total`, 1, request.timestamp, basicDimensions),
-      getMetricObject('gauge', `${prefix}.rq_time`, request.time, request.timestamp, basicDimensions),
-      getMetricObject('counter', `${prefix}.rq_${request.status}`, 1, request.timestamp, basicDimensions),
-      getMetricObject('gauge', `${prefix}.rq_size`, request.size, request.timestamp, basicDimensions)
+      getMetricObject('counter', `${prefix}.rq_total`, 1, request.timestamp, dimensions),
+      getMetricObject('gauge', `${prefix}.rq_time`, request.time, request.timestamp, dimensions),
+      getMetricObject('counter', `${prefix}.rq_${request.status}`, 1, request.timestamp, dimensions),
+      getMetricObject('gauge', `${prefix}.rq_size`, request.size, request.timestamp, dimensions)
     ];
   }
 };

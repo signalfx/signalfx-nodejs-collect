@@ -3,7 +3,7 @@
 let previousUsage = process.cpuUsage();
 let previousTimestamp = Date.now();
 
-module.exports = function () {
+module.exports.sense = function () {
   let currentUsage = process.cpuUsage();
   let currentTimestamp = Date.now();
 

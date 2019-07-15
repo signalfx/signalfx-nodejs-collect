@@ -2,7 +2,7 @@
 
 const os = require('os');
 
-module.exports = function () {
+module.exports.sense = function () {
   return {
     system: {
       total: os.totalmem(),
