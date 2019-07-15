@@ -3,8 +3,13 @@
 const signalfx = require('signalfx');
 
 module.exports = class SignalFxSender {
-  constructor(token) {
-    this.client = new signalfx.Ingest(token);
+  constructor(client, token) {
+    if (client) {
+      this.client = client;
+    }
+    else {
+      this.client = new signalfx.Ingest(token);
+    }
   }
 
   send(metrics) {
