@@ -24,7 +24,10 @@ module.exports = class SignalFxCollect {
   }
 
   start() {
-    this.sender = new SignalFxSender(this.signalFxClient, this.accessToken);
+    this.sender = new SignalFxSender({
+      client: this.signalFxClient,
+      accessToken: this.accessToken
+    }, this.interval);
 
     this._startCollectLoop(this.interval);
     this._registerEventHandlers();
@@ -33,7 +36,9 @@ module.exports = class SignalFxCollect {
   getMiddleware(framework) {
     switch (framework) {
     case 'express':
-      return middleware.express(metrics => this.sender.send(metrics));
+      return middleware.express(metrics => this.sender.sendMetrics(metrics));
+    case 'koa':
+      return middleware.koa(metrics => this.sender.sendMetrics(metrics));
     }
     throw `${framework} is not supported.`;
   }
@@ -51,7 +56,7 @@ module.exports = class SignalFxCollect {
 
   _startCollectLoop(interval) {
     setInterval(() => {
-      this.sender.send(collect.collect());
+      this.sender.sendMetrics(collect.collect());
     }, interval);
   }
 
@@ -60,7 +65,7 @@ module.exports = class SignalFxCollect {
     collect.registerEvent('memleak');
 
     collect.getEmitter().on('metrics', (metrics, event) => {
-      this.sender.send(metrics);
+      this.sender.sendMetrics(metrics);
       if (this.events[event.event]) {
         this.sender.sendEvent(event);
       }

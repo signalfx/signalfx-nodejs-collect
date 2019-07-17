@@ -3,14 +3,13 @@
 const adapters = require('./adapters');
 
 module.exports = {
-  express: cb => {
+  express: report => {
     let requestStart;
 
     return (req, res, next) => {
       requestStart = Date.now();
 
       res.once('finish', function () {
-        console.log(req.route);
         let request = {
           status: res.statusCode,
           route: req.route ? req.route.path : null,
@@ -20,10 +19,30 @@ module.exports = {
           timestamp: requestStart
         };
 
-        cb(adapters.metric.http(request));
+        report(adapters.metric.http(request));
       });
 
       next();
+    };
+  },
+  koa: report => {
+    return async (ctx, next) => {
+      let req = ctx.request;
+      let res = ctx.res;
+      let requestStart = Date.now();
+
+      await next();
+
+      let request = {
+        status: res.status,
+        route: req.path,
+        method: req.method,
+        time: Date.now() - requestStart,
+        size: req.length,
+        timestamp: requestStart
+      };
+
+      report(adapters.metric.http(request));
     };
   }
 };

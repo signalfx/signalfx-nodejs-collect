@@ -10,10 +10,10 @@ $ npm install signalfx-collect
 ```
 
 ## Usage
-To use this library, you need a SignalFx org access token. For more information on access tokens, see the API's [Authentication documentation](https://developers.signalfx.com/basics/authentication.html). In case you are already sending metrics to SignalFx through [SignalFx Node.js client](https://github.com/signalfx/signalfx-nodejs), you can provide a preconfigured client object instead of an org access token.
+To use this library, you need a SignalFx org access token. For more information on access tokens, see the API's [Authentication documentation](https://developers.signalfx.com/basics/authentication.html). If your organization is currently sending metrics to SignalFx through [SignalFx Node.js client](https://github.com/signalfx/signalfx-nodejs), you can provide a preconfigured client object instead of an org access token.
 
 
-This example shows how to import signalfx-collect and start collecting metrics.
+The code example below is how to import signalfx-collect and start collecting metrics. Collect HTTP request metrics by registering middleware to your express application as shown in the example code below.
 
 ```js
 const express = require('express');
@@ -36,7 +36,7 @@ app.get('/hello', (req, res) => {
 });
 ```
 
-You can also provide SignalFx client object instead of an org access token as mentioned above:
+To authenticate with a client object rather than an org access token, use the following example code:
 
 ```js
 ...
@@ -54,13 +54,15 @@ collect.start();
 ...
 ```
 
-Once `collect.start()` is called, signalfx-collect will start polling for the metrics based on a provided interval in milliseconds. You can also collect HTTP request metrics by registering a middleware to your express application as shown in the example.
+Once `collect.start()` is called, signalfx-collect will start polling for the metrics based on a provided interval in milliseconds.
 
-Object `config` must be passed when creating a new `SignalFxCollect` instance and may contain following fields:
+When creating a neew `SignalFxCollect` instance, you must pass the `config` object which may contain the following fields:
 + **accessToken** (string, required if **signalFxClient** is not provided) - SignalFx access token as explained above.
 + **signalFxClient** (string, required if **accessToken** is not provided) - SignalFx Ingest client object.
-+ **interval** (int) - Interval rate in milliseconds.
-+ **extraDimensions** (dict) - a map of extra dimensions to be sent with metrics and events. empty dictionary by default.
++ **interval** (int) - Interval rate in milliseconds. (**default**: `10000`)
++ **extraDimensions** (dict) - a dictionary of additional dimensions sent with metrics and events. Default is an empty dictionary.
+
+Below are the metrics sent by SignalFx Node.js Collect:
 
 ## Metrics
 - `nodejs.cpu.utilization.system` (*gauge*)

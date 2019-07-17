@@ -7,7 +7,7 @@ module.exports = {
     'ProcessWeakCallbacks', null, null, null,
     null, null, null, 'All'
   ],
-  DEFAULT_INTERVAL: 1000,
+  DEFAULT_INTERVAL: 10000,
   DEFAULT_EVENT: {
     gc: false,
     memleak: false

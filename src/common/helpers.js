@@ -3,12 +3,25 @@
 const fqdn = require('fqdn');
 const { METRIC_SOURCE } = require('./constants');
 
-module.exports.getMetricObject = (type, metric, value, timestamp, dimensions) => {
+let cumulativeValues = {};
+
+module.exports.createMetricObject = (type, metric, value, timestamp, dimensions, dimensionKey) => {
+  if (type === 'cumulative_counter') {
+    let key = metric + dimensionKey;
+    if (!cumulativeValues[key]) {
+      cumulativeValues[key] = 0;
+    }
+
+    cumulativeValues[key] += value;
+    value = cumulativeValues[key];
+  }
+
   let obj = {
     type,
     metric,
     value,
-    timestamp
+    timestamp,
+    dimensionKey: dimensionKey ? dimensionKey : ''
   };
   if (dimensions) {
     obj.dimensions = dimensions;

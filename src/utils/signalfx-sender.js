@@ -1,48 +1,24 @@
 'use strict';
 
 const signalfx = require('signalfx');
+const DatapointStore = require('./datapoint-store');
 
 module.exports = class SignalFxSender {
-  constructor(client, token) {
-    if (client) {
-      this.client = client;
+  constructor(auth, interval) {
+    if (auth.client) {
+      this.client = auth.client;
     }
     else {
-      this.client = new signalfx.Ingest(token);
+      this.client = new signalfx.Ingest(auth.accessToken);
     }
+    this.interval = interval;
+    this.datapointStore = new DatapointStore();
+
+    this._startReportLoop(interval);
   }
 
-  send(metrics) {
-    if (!metrics || metrics.length == 0) {
-      return;
-    }
-
-    let cumulative_counters = [];
-    let gauges = [];
-    let counters = [];
-
-    for (let i = 0; i < metrics.length; i++) {
-      if (!metrics[i]) {
-        continue;
-      }
-      switch (metrics[i].type) {
-      case 'cumulative_counter':
-        cumulative_counters.push(convertMetric(metrics[i]));
-        break;
-      case 'gauge':
-        gauges.push(convertMetric(metrics[i]));
-        break;
-      case 'counter':
-        counters.push(convertMetric(metrics[i]));
-        break;
-      }
-    }
-
-    this.client.send({
-      cumulative_counters,
-      gauges,
-      counters
-    });
+  sendMetrics(metrics) {
+    this.datapointStore.store(metrics);
   }
 
   sendEvent(event) {
@@ -50,16 +26,10 @@ module.exports = class SignalFxSender {
 
     this.client.sendEvent(event);
   }
-};
 
-function convertMetric(metric) {
-  let converted = {
-    metric: metric.metric,
-    value: metric.value,
-    timestamp: metric.timestamp
-  };
-  if (metric.dimensions) {
-    converted.dimensions = metric.dimensions;
+  _startReportLoop(interval) {
+    setInterval(() => {
+      this.client.send(this.datapointStore.flush());
+    }, interval);
   }
-  return converted;
-}
+};
