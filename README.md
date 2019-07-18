@@ -10,6 +10,11 @@ $ npm install signalfx-collect
 ```
 
 ## Usage
+
+Requires:
++ Node 8.0+
++ NPM 5.0+
+
 To use this library, you need a SignalFx org access token. For more information on access tokens, see the API's [Authentication documentation](https://developers.signalfx.com/basics/authentication.html). If your organization is currently sending metrics to SignalFx through [SignalFx Node.js client](https://github.com/signalfx/signalfx-nodejs), you can provide a preconfigured client object instead of an org access token.
 
 
