@@ -12,8 +12,6 @@ const emitter = new (require('events').EventEmitter)();
 
 module.exports = {
   collect: () => {
-    let metrics = [];
-
     let cpu = cpuUsage.get();
     if (cpu) {
       register.metric.cpuUsage(cpu);
@@ -31,16 +29,16 @@ module.exports = {
   },
   registerEvent: event => {
     switch (event) {
-      case 'gc':
-        gc.on('stats', stats => {
-          emitter.emit('metrics', register.metric.gc(stats), register.event.gc(stats));
-        });
-        break;
-      case 'memleak':
-        memwatch.on('leak', stats => {
-          emitter.emit('metrics', register.metric.memoryLeak(stats), register.event.memoryLeak(stats));
-        });
-        break;
+    case 'gc':
+      gc.on('stats', stats => {
+        emitter.emit('metrics', register.metric.gc(stats), register.event.gc(stats));
+      });
+      break;
+    case 'memleak':
+      memwatch.on('leak', stats => {
+        emitter.emit('metrics', register.metric.memoryLeak(stats), register.event.memoryLeak(stats));
+      });
+      break;
     }
   },
   getEmitter: () => emitter

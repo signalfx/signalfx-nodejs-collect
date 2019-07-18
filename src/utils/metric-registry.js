@@ -10,6 +10,10 @@ class Metric {
   get() {
     return createMetricObject(this.type, this.metric, this.value, this.timestamp, this.dimensions);
   }
+
+  renew() {
+    this.timestamp = Date.now();
+  }
 }
 
 class Gauge extends Metric {
@@ -73,6 +77,7 @@ module.exports = class MetricRegistry {
     for (let key in this.metrics) {
       if (this.metrics[key].type === 'cumulative_counter') {
         cumulatives[key] = this.metrics[key];
+        cumulatives[key].renew();
       }
     }
     this.metrics = cumulatives;

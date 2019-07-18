@@ -35,10 +35,10 @@ module.exports = class SignalFxCollect {
 
   getMiddleware(framework) {
     switch (framework) {
-      case 'express':
-        return middleware.express();
-      case 'koa':
-        return middleware.koa();
+    case 'express':
+      return middleware.express();
+    case 'koa':
+      return middleware.koa();
     }
     throw `${framework} is not supported.`;
   }

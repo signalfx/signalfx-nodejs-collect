@@ -1,7 +1,6 @@
 'use strict';
 
 const signalfx = require('signalfx');
-const DatapointStore = require('./datapoint-store');
 
 const metricRegistry = require('../register').getRegistry();
 
@@ -14,7 +13,6 @@ module.exports = class SignalFxSender {
       this.client = new signalfx.Ingest(auth.accessToken);
     }
     this.interval = interval;
-    this.datapointStore = new DatapointStore();
 
     this._startReportLoop(interval);
   }
@@ -41,15 +39,15 @@ function categorizeDatapoints(datapoints) {
 
   for (let i = 0; i < datapoints.length; i++) {
     switch (datapoints[i].type) {
-      case 'cumulative_counter':
-        cumulative_counters.push(convertMetric(datapoints[i]));
-        break;
-      case 'gauge':
-        gauges.push(convertMetric(datapoints[i]));
-        break;
-      case 'counter':
-        counters.push(convertMetric(datapoints[i]));
-        break;
+    case 'cumulative_counter':
+      cumulative_counters.push(convertMetric(datapoints[i]));
+      break;
+    case 'gauge':
+      gauges.push(convertMetric(datapoints[i]));
+      break;
+    case 'counter':
+      counters.push(convertMetric(datapoints[i]));
+      break;
     }
   }
 

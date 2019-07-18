@@ -46,7 +46,7 @@ module.exports.metric = {
     metricRegistry.getCumulative(`${prefix}.total`, dimensions, stats.gctype).increment(1, timestamp);
   },
   memoryLeak: stats => {
-    metricRegistry.getCumulative(`${METRIC_FAMILY}.memory.heap.leak`, basicDimensions, stats.gctype).increment(stats.growth, Date.now());
+    metricRegistry.getCumulative(`${METRIC_FAMILY}.memory.heap.leak`, basicDimensions, '').increment(stats.growth, Date.now());
   },
   http: request => {
     const prefix = `${METRIC_FAMILY}.http`;
