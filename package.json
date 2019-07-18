@@ -1,12 +1,13 @@
 {
   "name": "signalfx-collect",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "SignalFx library to collect nodejs metrics and report to SignalFx",
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint src",
     "test": "mocha"
   },
+  "homepage": "https://signalfx.com",
   "author": {
     "name": "SignalFx, Inc",
     "email": "info@signalfx.com",
@@ -26,5 +27,9 @@
     "eslint": "^6.0.1",
     "mocha": "^6.1.4",
     "sinon": "^7.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/signalfx/signalfx-nodejs-collect"
   }
 }

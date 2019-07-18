@@ -59,8 +59,11 @@ module.exports.metric = {
     const dimensionKey = `${method}${route}`;
 
     metricRegistry.getCumulative(`${prefix}.rq_total`, dimensions, dimensionKey).increment(1, request.timestamp);
-    metricRegistry.getGauge(`${prefix}.rq_time`, basicDimensions, '').set(request.time, request.timestamp);
+    metricRegistry.getGauge(`${prefix}.rq_time`, dimensions, dimensionKey).set(request.time, request.timestamp);
     metricRegistry.getCumulative(`${prefix}.rq_${request.status}`, dimensions, dimensionKey).increment(1, request.timestamp);
+    if (request.size) {
+      metricRegistry.getGauge(`${prefix}.rq_size`, dimensions, dimensionKey).set(request.size, request.timestamp);
+    }
   }
 };
 
