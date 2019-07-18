@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = class DatapointStore {
   constructor() {
     this.buffer = [];
@@ -42,15 +44,15 @@ function categorizeDatapoints(datapointMap) {
 
   for (let key in datapointMap) {
     switch (datapointMap[key].type) {
-    case 'cumulative_counter':
-      cumulative_counters.push(convertMetric(datapointMap[key]));
-      break;
-    case 'gauge':
-      gauges.push(convertMetric(datapointMap[key]));
-      break;
-    case 'counter':
-      counters.push(convertMetric(datapointMap[key]));
-      break;
+      case 'cumulative_counter':
+        cumulative_counters.push(convertMetric(datapointMap[key]));
+        break;
+      case 'gauge':
+        gauges.push(convertMetric(datapointMap[key]));
+        break;
+      case 'counter':
+        counters.push(convertMetric(datapointMap[key]));
+        break;
     }
   }
 
@@ -78,7 +80,7 @@ function extractCumulativeCounters(metrics) {
   let newTimestamp = Date.now();
 
   for (let i = 0; i < metrics.length; i++) {
-    if (metrics[i].type !== 'gauge') {
+    if (metrics[i].type === 'cumulative_counter') {
       metrics[i].timestamp = newTimestamp;
       cumulativeCounters.push(metrics[i]);
     }

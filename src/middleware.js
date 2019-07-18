@@ -1,9 +1,9 @@
 'use strict';
 
-const adapters = require('./adapters');
+const register = require('./register');
 
 module.exports = {
-  express: report => {
+  express: () => {
     let requestStart;
 
     return (req, res, next) => {
@@ -19,13 +19,13 @@ module.exports = {
           timestamp: requestStart
         };
 
-        report(adapters.metric.http(request));
+        register.metric.http(request);
       });
 
       next();
     };
   },
-  koa: report => {
+  koa: () => {
     return async (ctx, next) => {
       let req = ctx.request;
       let res = ctx.res;
@@ -42,7 +42,7 @@ module.exports = {
         timestamp: requestStart
       };
 
-      report(adapters.metric.http(request));
+      register.metric.http(request);
     };
   }
 };

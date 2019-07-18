@@ -3,6 +3,8 @@
 const signalfx = require('signalfx');
 const DatapointStore = require('./datapoint-store');
 
+const metricRegistry = require('../register').getRegistry();
+
 module.exports = class SignalFxSender {
   constructor(auth, interval) {
     if (auth.client) {
@@ -17,10 +19,6 @@ module.exports = class SignalFxSender {
     this._startReportLoop(interval);
   }
 
-  sendMetrics(metrics) {
-    this.datapointStore.store(metrics);
-  }
-
   sendEvent(event) {
     event.category = this.client.EVENT_CATEGORIES.USER_DEFINED;
 
@@ -29,7 +27,47 @@ module.exports = class SignalFxSender {
 
   _startReportLoop(interval) {
     setInterval(() => {
-      this.client.send(this.datapointStore.flush());
+      let datapoints = metricRegistry.export();
+      this.client.send(categorizeDatapoints(datapoints));
+      metricRegistry.flush();
     }, interval);
   }
 };
+
+function categorizeDatapoints(datapoints) {
+  let cumulative_counters = [];
+  let gauges = [];
+  let counters = [];
+
+  for (let i = 0; i < datapoints.length; i++) {
+    switch (datapoints[i].type) {
+      case 'cumulative_counter':
+        cumulative_counters.push(convertMetric(datapoints[i]));
+        break;
+      case 'gauge':
+        gauges.push(convertMetric(datapoints[i]));
+        break;
+      case 'counter':
+        counters.push(convertMetric(datapoints[i]));
+        break;
+    }
+  }
+
+  return {
+    cumulative_counters,
+    gauges,
+    counters
+  };
+}
+
+function convertMetric(metric) {
+  let converted = {
+    metric: metric.metric,
+    value: metric.value,
+    timestamp: metric.timestamp
+  };
+  if (metric.dimensions) {
+    converted.dimensions = metric.dimensions;
+  }
+  return converted;
+}

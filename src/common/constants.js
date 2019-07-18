@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   METRIC_FAMILY: 'nodejs',
   METRIC_SOURCE: 'nodejs-collect',
@@ -7,7 +9,7 @@ module.exports = {
     'ProcessWeakCallbacks', null, null, null,
     null, null, null, 'All'
   ],
-  DEFAULT_INTERVAL: 10000,
+  DEFAULT_INTERVAL_MILLISECONDS: 10000,
   DEFAULT_EVENT: {
     gc: false,
     memleak: false
