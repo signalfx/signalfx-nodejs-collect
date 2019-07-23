@@ -1,6 +1,6 @@
 {
   "name": "signalfx-collect",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "SignalFx library to collect nodejs metrics and report to SignalFx",
   "main": "src/index.js",
   "scripts": {
