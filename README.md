@@ -12,8 +12,8 @@ $ npm install signalfx-collect
 ## Usage
 
 Requires:
-+ Node 8.0+
-+ NPM 5.0+
++ Node 8 - 11
++ NPM 5 - 6
 
 To use this library, you need a SignalFx org access token. For more information on access tokens, see the API's [Authentication documentation](https://developers.signalfx.com/basics/authentication.html). If your organization is currently sending metrics to SignalFx through [SignalFx Node.js client](https://github.com/signalfx/signalfx-nodejs), you can provide a preconfigured client object instead of an org access token.
 
@@ -78,14 +78,15 @@ Below are the metrics sent by SignalFx Node.js Collect:
 - `nodejs.memory.heap.total` (*gauge*)
 - `nodejs.memory.heap.used` (*gauge*)
 - `nodejs.memory.rss` (*gauge*)
-- `nodejs.memory.gc.size` (*gauge*)
-- `nodejs.memory.gc.pause` (*gauge*)
-- `nodejs.memory.heap.leak` (*gauge*)
+- `nodejs.memory.gc.size` (*cumulative_counter*)
+- `nodejs.memory.gc.pause` (*cumulative_counter*)
+- `nodejs.memory.gc.total` (*cumulative_counter*)
+- `nodejs.memory.heap.leak` (*cumulative_counter*)
 - `nodejs.event_loop.max` (*gauge*)
 - `nodejs.event_loop.min` (*gauge*)
-- `nodejs.http.rq_total` (*counter*)
+- `nodejs.http.rq_total` (*cumulative_counter*)
 - `nodejs.http.rq_time` (*gauge*)
-- `nodejs.http.rq_<status_code>` (*counter*)
+- `nodejs.http.rq_<status_code>` (*cumulative_counter*)
 - `nodejs.http.rq_size` (*gauge*)
 
 
