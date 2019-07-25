@@ -62,9 +62,10 @@ collect.start();
 Once `collect.start()` is called, signalfx-collect will start polling for the metrics based on a provided interval in milliseconds.
 
 When creating a neew `SignalFxCollect` instance, you must pass the `config` object which may contain the following fields:
-+ **accessToken** (string, required if **signalFxClient** is not provided) - SignalFx access token as explained above.
-+ **signalFxClient** (string, required if **accessToken** is not provided) - SignalFx Ingest client object.
-+ **interval** (int) - Interval rate in milliseconds. (**default**: `10000`)
++ **accessToken** (string) - SignalFx access token as explained above.
++ **signalFxClient** (string) - SignalFx Ingest client object.
++ **ingestEndpoint** (string) - custom url to send datapoints in format http://custom.comain/api/path
++ **interval** (int) - interval rate in milliseconds. (**default**: `10000`)
 + **extraDimensions** (dict) - a dictionary of additional dimensions sent with metrics and events. Default is an empty dictionary.
 
 Below are the metrics sent by SignalFx Node.js Collect:
