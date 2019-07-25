@@ -64,7 +64,7 @@ Once `collect.start()` is called, signalfx-collect will start polling for the me
 When creating a neew `SignalFxCollect` instance, you must pass the `config` object which may contain the following fields:
 + **accessToken** (string) - SignalFx access token as explained above.
 + **signalFxClient** (string) - SignalFx Ingest client object.
-+ **ingestEndpoint** (string) - custom url to send datapoints in format http://custom.comain/api/path
++ **ingestEndpoint** (string) - custom url to send datapoints in format http://custom.domain/api/path
 + **interval** (int) - interval rate in milliseconds. (**default**: `10000`)
 + **extraDimensions** (dict) - a dictionary of additional dimensions sent with metrics and events. Default is an empty dictionary.
 
