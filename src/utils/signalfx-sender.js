@@ -5,16 +5,23 @@ const signalfx = require('signalfx');
 const metricRegistry = require('../register').getRegistry();
 
 module.exports = class SignalFxSender {
-  constructor(auth, interval) {
-    if (auth.client) {
-      this.client = auth.client;
+  constructor(config) {
+    if (!config) {
+      throw 'SignalFxSender requires a config object';
+    }
+    if (config.client) {
+      this.client = config.client;
     }
     else {
-      this.client = new signalfx.Ingest(auth.accessToken);
+      let options = {};
+      if (config.ingestEndpoint) {
+        options.ingestEndpoint = config.ingestEndpoint;
+      }
+      this.client = new signalfx.Ingest(config.accessToken, options);
     }
-    this.interval = interval;
+    this.interval = config.interval;
 
-    this._startReportLoop(interval);
+    this._startReportLoop(config.interval);
   }
 
   sendEvent(event) {

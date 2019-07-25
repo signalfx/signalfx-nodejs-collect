@@ -13,9 +13,8 @@ module.exports = class SignalFxCollect {
     if (config.signalFxClient) {
       this.signalFxClient = config.signalFxClient;
     }
-    else {
-      this.accessToken = config.accessToken;
-    }
+    this.accessToken = config.accessToken;
+    this.ingestEndpoint = config.ingestEndpoint;
     this.interval = config.interval || DEFAULT_INTERVAL_MILLISECONDS;
     this._enableEvents(config.sendEvent);
     if (typeof config.extraDimensions === 'object') {
@@ -26,8 +25,10 @@ module.exports = class SignalFxCollect {
   start() {
     this.sender = new SignalFxSender({
       client: this.signalFxClient,
-      accessToken: this.accessToken
-    }, this.interval);
+      accessToken: this.accessToken,
+      ingestEndpoint: this.ingestEndpoint,
+      interval: this.interval
+    });
 
     this._startCollectLoop(this.interval);
     this._registerEventHandlers();
@@ -69,8 +70,5 @@ module.exports = class SignalFxCollect {
 function validateConfig(config) {
   if (!config) {
     throw 'Config object is required.';
-  }
-  if (!config.accessToken && !config.signalFxClient) {
-    throw 'Either accessToken or signalFxClient needs to be provided.';
   }
 }
