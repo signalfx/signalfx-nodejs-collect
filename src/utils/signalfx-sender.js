@@ -6,9 +6,8 @@ const metricRegistry = require('../register').getRegistry();
 
 module.exports = class SignalFxSender {
   constructor(config) {
-    if (!config) {
-      throw 'SignalFxSender requires a config object';
-    }
+    validateConfig(config);
+
     if (config.client) {
       this.client = config.client;
     }
@@ -38,6 +37,12 @@ module.exports = class SignalFxSender {
     }, interval);
   }
 };
+
+function validateConfig(config) {
+  if (!config) {
+    throw 'SignalFxSender requires a config object';
+  }
+}
 
 function categorizeDatapoints(datapoints) {
   let cumulative_counters = [];
