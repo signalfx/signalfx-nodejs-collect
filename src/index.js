@@ -21,6 +21,9 @@ module.exports = class SignalFxCollect {
       this.clientConfig.ingestEndpoint = config.ingestEndpoint;
       this.clientConfig.accessToken = config.accessToken;
     }
+    if (config.logLevel === 'debug') {
+      this.clientConfig.logLevel = config.logLevel;
+    }
     
     this._enableEvents(config.sendEvent);
     if (typeof config.extraDimensions === 'object') {
