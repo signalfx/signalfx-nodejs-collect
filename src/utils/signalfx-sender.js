@@ -2,6 +2,7 @@
 
 const signalfx = require('signalfx');
 
+const { LOG_LEVEL } = require('../common/constants');
 const metricRegistry = require('../register').getRegistry();
 
 module.exports = class SignalFxSender {
@@ -24,6 +25,13 @@ module.exports = class SignalFxSender {
     }
 
     this._startReportLoop(config.interval);
+
+    if (this.logLevel <= LOG_LEVEL.INFO) {
+      console.debug('Start reporting to SignalFx Node.js Client');
+    }
+    if (this.logLevel <= LOG_LEVEL.DEBUG) {
+      console.debug(this.client);
+    }
   }
 
   sendEvent(event) {
@@ -37,10 +45,12 @@ module.exports = class SignalFxSender {
       let datapoints = metricRegistry.export();
       this.client.send(categorizeDatapoints(datapoints));
       metricRegistry.flush();
-      if (this.logLevel === 'debug') {
-        console.log(this.client);
-        console.log('Reporting datapoints to ingest');
-        console.log(datapoints);
+      
+      if (this.logLevel <= LOG_LEVEL.INFO) {
+        console.debug(`Reported ${datapoints.length} datapoints to SignalFx Node.js Client`);
+      }
+      if (this.logLevel <= LOG_LEVEL.DEBUG) {
+        console.debug(datapoints);
       }
     }, interval);
   }

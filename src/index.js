@@ -4,7 +4,7 @@ const SignalFxSender = require('./utils/signalfx-sender');
 const collect = require('./collect');
 const middleware = require('./middleware');
 const register = require('./register');
-const { DEFAULT_INTERVAL_MILLISECONDS, DEFAULT_EVENT } = require('./common/constants');
+const { DEFAULT_INTERVAL_MILLISECONDS, DEFAULT_EVENT, LOG_LEVEL } = require('./common/constants');
 
 module.exports = class SignalFxCollect {
   constructor(config) {
@@ -21,8 +21,15 @@ module.exports = class SignalFxCollect {
       this.clientConfig.ingestEndpoint = config.ingestEndpoint;
       this.clientConfig.accessToken = config.accessToken;
     }
-    if (config.logLevel === 'debug') {
-      this.clientConfig.logLevel = config.logLevel;
+    
+    this.clientConfig.logLevel = LOG_LEVEL.NONE;
+    if (typeof config.logLevel === 'string') {
+      if (config.logLevel.toLowerCase() === 'debug') {
+        this.clientConfig.logLevel = LOG_LEVEL.DEBUG;
+      }
+      else if (config.logLevel.toLowerCase() === 'info') {
+        this.clientConfig.logLevel = LOG_LEVEL.INFO;
+      }
     }
     
     this._enableEvents(config.sendEvent);

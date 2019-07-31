@@ -13,5 +13,10 @@ module.exports = {
   DEFAULT_EVENT: {
     gc: false,
     memleak: false
+  },
+  LOG_LEVEL: {
+    DEBUG: 1,
+    INFO: 2,
+    NONE: 3
   }
 };
