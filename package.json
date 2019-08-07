@@ -18,8 +18,11 @@
     "event-loop-stats": "^1.2.0",
     "fqdn": "0.0.3",
     "gc-stats": "^1.4.0",
-    "node-memwatch": "^1.0.1",
     "signalfx": "^6.0.1"
+  },
+  "optionalDependencies": {
+    "node-memwatch": "^1.0.1",
+    "memwatch-next": "^0.3.0"
   },
   "devDependencies": {
     "assert": "^2.0.0",

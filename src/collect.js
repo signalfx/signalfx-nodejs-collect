@@ -2,7 +2,14 @@
 
 const eventLoopStats = require('event-loop-stats');
 const gc = (require('gc-stats'))();
-const memwatch = require('node-memwatch');
+let memwatch;
+
+if(process.versions.node.split('.')[0] === '8') {
+  memwatch = require('memwatch-next');
+}
+else {
+  memwatch = require('node-memwatch');
+}
 
 const cpuUsage = require('./utils/cpu-usage');
 const memoryUsage = require('./utils/memory-usage');
