@@ -15,7 +15,7 @@ module.exports = {
           route: req.route ? req.route.path : null,
           method: getExpressRequestMethod(req.route),
           time: Date.now() - requestStart,
-          size: req.get('content-length'),
+          size: parseInt(req.get('content-length')),
           timestamp: requestStart
         };
 
