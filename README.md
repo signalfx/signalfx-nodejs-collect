@@ -66,7 +66,7 @@ When creating a neew `SignalFxCollect` instance, you must pass the `config` obje
 + **signalFxClient** (string) - SignalFx Ingest client object.
 + **ingestEndpoint** (string) - custom url to send datapoints in format http://custom.domain/api/path
 + **interval** (int) - interval rate in milliseconds. (**default**: `10000`)
-+ **extraDimensions** (dict) - a dictionary of additional dimensions sent with metrics and events. Default is an empty dictionary.
++ **extraDimensions** (dict) - a dictionary of additional dimensions sent with metrics and events with string keys/values. Default is an empty dictionary.
 + **logLevel** (string) - a level for logging verbosity. Available levels are `debug`, `info`. No log will be shown except system exceptions if the level is not specified.
 
 Below are the metrics sent by SignalFx Node.js Collect:

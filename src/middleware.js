@@ -12,7 +12,7 @@ module.exports = {
       res.once('finish', function () {
         let request = {
           status: res.statusCode,
-          route: req.route ? req.route.path : null,
+          route: getExpressRequestPath(req.route),
           method: getExpressRequestMethod(req.route),
           time: Date.now() - requestStart,
           size: parseInt(req.get('content-length')),
@@ -61,6 +61,21 @@ function getExpressRequestMethod(route) {
           return methodNames[i].toUpperCase();
         }
       }
+    }
+  }
+  return null;
+}
+
+function getExpressRequestPath(route) {
+  if (route) {
+    switch (typeof(route.path)) {
+      case 'string':
+        return route.path;
+      case 'object':
+        if (route.path.length > 0) {
+          return route.path.join('/');
+        }
+        break;
     }
   }
   return null;
