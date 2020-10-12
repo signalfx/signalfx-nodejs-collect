@@ -95,7 +95,17 @@ function convertMetric(metric) {
     timestamp: metric.timestamp
   };
   if (metric.dimensions) {
-    converted.dimensions = metric.dimensions;
+    converted.dimensions = filterDimensions(metric.dimensions);
   }
   return converted;
+}
+
+function filterDimensions(dimensions) {
+  const filtered = {};
+  for (const key in dimensions) {
+    if (typeof(dimensions[key]) == 'string') {
+      filtered[key] = dimensions[key];
+    }
+  }
+  return filtered;
 }
