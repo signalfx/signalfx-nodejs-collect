@@ -5,7 +5,15 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint src",
-    "test": "mocha"
+    "test": "mocha",
+    "install": "node-pre-gyp install --fallback-to-build"
+  },
+  "binary": {
+    "module_name": "gcstats",
+    "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
+    "remote_path": "./{module_name}/v{version}/{configuration}/",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
+    "host": "https://signalfx-collect.s3.amazonaws.com"
   },
   "homepage": "https://signalfx.com",
   "author": {
@@ -17,9 +25,9 @@
   "dependencies": {
     "event-loop-stats": "^1.2.0",
     "fqdn": "0.0.3",
-    "gc-stats": "^1.4.0",
     "node-memwatch-sfx": "1.0.0-sfx1",
-    "signalfx": "^6.0.1"
+    "signalfx": "^6.0.1",
+    "@mapbox/node-pre-gyp": "^1.0.5"
   },
   "devDependencies": {
     "assert": "^2.0.0",

@@ -1,7 +1,7 @@
 'use strict';
 
 const eventLoopStats = require('event-loop-stats');
-const gc = (require('gc-stats'))();
+const gc = (require('./gc-stats'))();
 const memwatch = require('node-memwatch-sfx');
 
 const cpuUsage = require('./utils/cpu-usage');
