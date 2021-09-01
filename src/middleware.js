@@ -69,13 +69,13 @@ function getExpressRequestMethod(route) {
 function getExpressRequestPath(route) {
   if (route) {
     switch (typeof(route.path)) {
-      case 'string':
-        return route.path;
-      case 'object':
-        if (route.path.length > 0) {
-          return route.path.join('/');
-        }
-        break;
+    case 'string':
+      return route.path;
+    case 'object':
+      if (route.path.length > 0) {
+        return route.path.join('/');
+      }
+      break;
     }
   }
   return null;
