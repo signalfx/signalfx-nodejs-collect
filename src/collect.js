@@ -41,5 +41,9 @@ module.exports = {
       break;
     }
   },
-  getEmitter: () => emitter
+  getEmitter: () => emitter,
+  unregister: () => {
+    gc.removeAllListeners('stats');
+    memwatch.removeAllListeners('leak');
+  }
 };

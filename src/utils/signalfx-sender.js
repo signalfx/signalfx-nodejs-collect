@@ -40,12 +40,16 @@ module.exports = class SignalFxSender {
     this.client.sendEvent(event);
   }
 
+  stop() {
+    clearInterval(this._reportLoopHandle);
+  }
+
   _startReportLoop(interval) {
-    setInterval(() => {
+    this._reportLoopHandle = setInterval(() => {
       let datapoints = metricRegistry.export();
       this.client.send(categorizeDatapoints(datapoints));
       metricRegistry.flush();
-      
+
       if (this.logLevel <= LOG_LEVEL.INFO) {
         console.debug(`Reported ${datapoints.length} datapoints to SignalFx Node.js Client`);
       }

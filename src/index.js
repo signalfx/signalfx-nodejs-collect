@@ -21,7 +21,7 @@ module.exports = class SignalFxCollect {
       this.clientConfig.ingestEndpoint = config.ingestEndpoint;
       this.clientConfig.accessToken = config.accessToken;
     }
-    
+
     this.clientConfig.logLevel = LOG_LEVEL.NONE;
     if (typeof config.logLevel === 'string') {
       if (config.logLevel.toLowerCase() === 'debug') {
@@ -31,7 +31,7 @@ module.exports = class SignalFxCollect {
         this.clientConfig.logLevel = LOG_LEVEL.INFO;
       }
     }
-    
+
     this._enableEvents(config.sendEvent);
     if (typeof config.extraDimensions === 'object') {
       register.addBasicDimensions(config.extraDimensions);
@@ -43,6 +43,12 @@ module.exports = class SignalFxCollect {
 
     this._startCollectLoop(this.interval);
     this._registerEventHandlers();
+  }
+
+  _stop() {
+    clearInterval(this._collectLoopHandle);
+    collect.unregister();
+    this.sender.stop();
   }
 
   getMiddleware(framework) {
@@ -67,7 +73,7 @@ module.exports = class SignalFxCollect {
   }
 
   _startCollectLoop(interval) {
-    setInterval(() => {
+    this._collectLoopHandle = setInterval(() => {
       collect.collect();
     }, interval);
   }
