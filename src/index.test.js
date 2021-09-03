@@ -41,14 +41,14 @@ describe('basic usage scenarios', () => {
 
     const collect = new SignalFxCollect({
       signalFxClient: client,
-      interval: 50
+      interval: 20
     });
     collect.start();
 
-    await new Promise(resolve => { setTimeout(resolve, 300); });
+    await new Promise(resolve => { setTimeout(resolve, 20 * 5); });
     collect._stop();
 
-    expect(receivedDatapoints.length >= 5).toBe(true);
-    expect(receivedDatapoints.length <= 7).toBe(true);
+    expect(receivedDatapoints.length).toBeGreaterThanOrEqual(3);
+    expect(receivedDatapoints.length).toBeLessThanOrEqual(7);
   });
 });
