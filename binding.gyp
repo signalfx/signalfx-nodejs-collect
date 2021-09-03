@@ -1,6 +1,6 @@
 {
   "targets": [{
-    "target_name": "gcstats",
+    "target_name": "signalfx-collect-gcstats",
     "sources": [ "cpp/gcstats.cc" ],
     "include_dirs": [
       "src",
@@ -9,9 +9,9 @@
   }, {
     "target_name": "action_after_build",
     "type": "none",
-    "dependencies": [ "gcstats" ],
+    "dependencies": [ "signalfx-collect-gcstats" ],
     "copies": [{
-      "files": [ "<(PRODUCT_DIR)/gcstats.node" ],
+      "files": [ "<(PRODUCT_DIR)/signalfx-collect-gcstats.node" ],
       "destination": "<(module_path)"
     }]
   }]

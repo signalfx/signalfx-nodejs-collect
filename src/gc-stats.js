@@ -3,7 +3,6 @@
 var gcEmitter,
   binary = require('@mapbox/node-pre-gyp'),
   path = require('path'),
-  // eslint-disable-next-line no-undef
   binding_path = binary.find(path.resolve(path.join(__dirname,'../package.json'))),
   gcstats = require(binding_path),
   EventEmitter = require('events').EventEmitter;

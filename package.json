@@ -8,13 +8,15 @@
     "npm": ">=5.0.0 <7"
   },
   "scripts": {
-    "install": "node-pre-gyp build",
+    "build": "node-pre-gyp build",
+    "install": "node-pre-gyp install --fallback-to-build",
     "lint:fix": "eslint src --fix",
     "lint": "eslint src",
+    "pretest": "npm run build",
     "test": "jest"
   },
   "binary": {
-    "module_name": "gcstats",
+    "module_name": "signalfx-collect-gcstats",
     "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
     "remote_path": "./{module_name}/v{version}/{configuration}/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
