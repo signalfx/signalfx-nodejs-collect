@@ -4,7 +4,7 @@
   "description": "SignalFx library to collect nodejs metrics and report to SignalFx",
   "main": "src/index.js",
   "engines": {
-    "node": ">=8.0.0 <12",
+    "node": ">=8.0.0 <15",
     "npm": ">=5.0.0 <7"
   },
   "scripts": {
