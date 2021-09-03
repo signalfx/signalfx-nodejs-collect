@@ -76,6 +76,7 @@ describe('basic usage scenarios', () => {
 
     const dataPoint = receivedDatapoints[0];
     expect(dataPoint).toBeTruthy();
+    expect(Object.keys(dataPoint)).toEqual(['cumulative_counter', 'gauge']);
 
     [
       'nodejs.memory.gc.size',
