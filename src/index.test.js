@@ -71,7 +71,7 @@ describe('basic usage scenarios', () => {
     });
     collect.start();
 
-    await delay(50);
+    await delay(70);
     collect._stop();
 
     const dataPoint = receivedDatapoints[0];
