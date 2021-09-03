@@ -29,7 +29,7 @@
     "email": "info@signalfx.com",
     "url": "https://signalfx.com"
   },
-  "license": "Apache Software License v2",
+  "license": "Apache-2.0",
   "dependencies": {
     "event-loop-stats": "^1.3.0",
     "fqdn": "0.0.3",
