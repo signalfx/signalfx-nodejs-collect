@@ -1,3 +1,12 @@
+<p align="center">
+  <a href="https://github.com/signalfx/signalfx-nodejs/releases">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/signalfx/signalfx-nodejs?include_prereleases&style=for-the-badge">
+  </a>
+  <img alt="GitHub branch checks state" src="https://img.shields.io/github/checks-status/signalfx/signalfx-nodejs/main?style=for-the-badge">
+  <img alt="npm" src="https://img.shields.io/npm/v/signalfx?style=for-the-badge">
+  <img alt="node-current" src="https://img.shields.io/node/v/signalfx?style=for-the-badge">
+</p>
+
 # SignalFx Node.js Collect
 
 The SignalFx Node.js Collect is a library to monitor a Node.js application. It collects metrics about CPU utilization, memory usage, event loop, memory leaks, garbage collection and HTTP requests.
