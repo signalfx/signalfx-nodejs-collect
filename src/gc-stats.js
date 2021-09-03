@@ -1,8 +1,9 @@
-"use strict";
+'use strict';
 
 var gcEmitter,
   binary = require('@mapbox/node-pre-gyp'),
   path = require('path'),
+  // eslint-disable-next-line no-undef
   binding_path = binary.find(path.resolve(path.join(__dirname,'../package.json'))),
   gcstats = require(binding_path),
   EventEmitter = require('events').EventEmitter;
@@ -12,7 +13,7 @@ function gcStats() {
     throw Error('gc-stats no longer exports a constructor. Call without the `new` keyword');
   }
 
-  if(!gcEmitter) {
+  if (!gcEmitter) {
     gcEmitter = new EventEmitter();
     gcstats.afterGC(function(stats) {
       gcEmitter.emit('data', stats);
