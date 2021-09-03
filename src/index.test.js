@@ -9,6 +9,8 @@ function delay(ms) {
   return new Promise(resolve => { setTimeout(resolve, ms); });
 }
 
+const MEASUREMENT_TICK_MS = 100;
+
 describe('basic usage scenarios', () => {
   let endpoint;
   let receivedDatapoints;
@@ -49,11 +51,11 @@ describe('basic usage scenarios', () => {
 
     const collect = new SignalFxCollect({
       signalFxClient: client,
-      interval: 30
+      interval: MEASUREMENT_TICK_MS
     });
     collect.start();
 
-    await delay(30 * 5);
+    await delay(MEASUREMENT_TICK_MS * 5 + MEASUREMENT_TICK_MS / 2);
     collect._stop();
 
     expect(receivedDatapoints.length).toBeGreaterThanOrEqual(3);
@@ -67,11 +69,11 @@ describe('basic usage scenarios', () => {
 
     const collect = new SignalFxCollect({
       signalFxClient: client,
-      interval: 30
+      interval: MEASUREMENT_TICK_MS
     });
     collect.start();
 
-    await delay(70);
+    await delay(MEASUREMENT_TICK_MS + MEASUREMENT_TICK_MS / 2);
     collect._stop();
 
     const dataPoint = receivedDatapoints[0];
