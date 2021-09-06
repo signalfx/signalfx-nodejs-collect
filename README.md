@@ -1,10 +1,10 @@
 <p align="center">
-  <a href="https://github.com/signalfx/signalfx-nodejs/releases">
-    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/signalfx/signalfx-nodejs?include_prereleases&style=for-the-badge">
+  <a href="https://github.com/signalfx/signalfx-nodejs-collect/releases">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/signalfx/signalfx-nodejs-collect?include_prereleases&style=for-the-badge">
   </a>
-  <img alt="GitHub branch checks state" src="https://img.shields.io/github/checks-status/signalfx/signalfx-nodejs/main?style=for-the-badge">
-  <img alt="npm" src="https://img.shields.io/npm/v/signalfx?style=for-the-badge">
-  <img alt="node-current" src="https://img.shields.io/node/v/signalfx?style=for-the-badge">
+  <img alt="GitHub branch checks state" src="https://img.shields.io/github/checks-status/signalfx/signalfx-nodejs-collect/main?style=for-the-badge">
+  <img alt="npm" src="https://img.shields.io/npm/v/signalfx-collect?style=for-the-badge">
+  <img alt="node-current" src="https://img.shields.io/node/v/signalfx-collect?style=for-the-badge">
 </p>
 
 # SignalFx Node.js Collect
