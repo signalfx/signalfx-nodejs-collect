@@ -9,7 +9,8 @@ function delay(ms) {
   return new Promise(resolve => { setTimeout(resolve, ms); });
 }
 
-const MEASUREMENT_TICK_MS = 100;
+// assumes that there will be a GC event within this window
+const MEASUREMENT_TICK_MS = 200;
 
 describe('basic usage scenarios', () => {
   let endpoint;
@@ -62,7 +63,7 @@ describe('basic usage scenarios', () => {
     expect(receivedDatapoints.length).toBeLessThanOrEqual(7);
   });
 
-  test('should produce approximately correct data points', async () => {
+  test('should produce all gauge metrics', async () => {
     const client = new signalfx.IngestJson('<token>', {
       ingestEndpoint: endpoint
     });
@@ -72,6 +73,45 @@ describe('basic usage scenarios', () => {
       interval: MEASUREMENT_TICK_MS
     });
     collect.start();
+    global.gc();
+
+    await delay(MEASUREMENT_TICK_MS + MEASUREMENT_TICK_MS / 2);
+    collect._stop();
+
+    const dataPoint = receivedDatapoints[0];
+    expect(dataPoint).toBeTruthy();
+    expect(Object.keys(dataPoint)).toEqual(['cumulative_counter', 'gauge']);
+
+    [
+      'nodejs.cpu.utilization.system',
+      'nodejs.cpu.utilization.user',
+      'nodejs.cpu.utilization.total',
+      'nodejs.memory.system.total',
+      'nodejs.memory.system.free',
+      'nodejs.memory.heap.total',
+      'nodejs.memory.heap.used',
+      'nodejs.memory.rss',
+      'nodejs.event_loop.max',
+      'nodejs.event_loop.min'
+    ].forEach(metricName => {
+      const gauge = dataPoint.gauge.find(g => g.metric == metricName);
+      expect(gauge).toBeTruthy();
+      expect(gauge.value).toBeGreaterThanOrEqual(0);
+      expect(gauge.timestamp).toBeGreaterThan(0);
+    });
+  });
+
+  test('should produce all cumulative counter metrics', async () => {
+    const client = new signalfx.IngestJson('<token>', {
+      ingestEndpoint: endpoint
+    });
+
+    const collect = new SignalFxCollect({
+      signalFxClient: client,
+      interval: MEASUREMENT_TICK_MS
+    });
+    collect.start();
+    global.gc();
 
     await delay(MEASUREMENT_TICK_MS + MEASUREMENT_TICK_MS / 2);
     collect._stop();
@@ -92,24 +132,6 @@ describe('basic usage scenarios', () => {
       expect(counter).toBeTruthy();
       expect(counter.value).toBeGreaterThanOrEqual(0);
       expect(counter.timestamp).toBeGreaterThan(0);
-    });
-
-    [
-      'nodejs.cpu.utilization.system',
-      'nodejs.cpu.utilization.user',
-      'nodejs.cpu.utilization.total',
-      'nodejs.memory.system.total',
-      'nodejs.memory.system.free',
-      'nodejs.memory.heap.total',
-      'nodejs.memory.heap.used',
-      'nodejs.memory.rss',
-      'nodejs.event_loop.max',
-      'nodejs.event_loop.min'
-    ].forEach(metricName => {
-      const gauge = dataPoint.gauge.find(g => g.metric == metricName);
-      expect(gauge).toBeTruthy();
-      expect(gauge.value).toBeGreaterThanOrEqual(0);
-      expect(gauge.timestamp).toBeGreaterThan(0);
     });
   });
 });

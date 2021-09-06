@@ -13,8 +13,8 @@
     "lint:fix": "eslint src --fix",
     "lint": "eslint src",
     "pretest": "npm run build",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "node --expose-gc ./node_modules/.bin/jest",
+    "test:watch": "node --expose-gc ./node_modules/.bin/jest --watch"
   },
   "binary": {
     "module_name": "signalfx-collect-gcstats",
