@@ -18,6 +18,8 @@ To install using npm:
 $ npm install signalfx-collect
 ```
 
+**Note:** You will get an error when `> node-pre-gyp install --fallback-to-build` is executed, stating that pre-built binaries couldn't be downloaded. We do not provide pre-built binaries. To ensure that no one can exploit binaries fetching we point `node-pre-gyp` to one of our domains, to a path which returns 403.
+
 ## Usage
 
 To use this library, you need a SignalFx org access token. For more information on access tokens, see the API's [Authentication documentation](https://developers.signalfx.com/basics/authentication.html). If your organization is currently sending metrics to SignalFx through [SignalFx Node.js client](https://github.com/signalfx/signalfx-nodejs), you can provide a preconfigured client object instead of an org access token.
