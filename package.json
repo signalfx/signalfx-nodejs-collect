@@ -1,11 +1,11 @@
 {
   "name": "signalfx-collect",
-  "version": "2.0.0-beta3",
+  "version": "2.0.0-beta4",
   "description": "SignalFx library to collect nodejs metrics and report to SignalFx",
   "main": "src/index.js",
   "engines": {
     "node": ">=8.0.0 <17",
-    "npm": ">=5.0.0 <7"
+    "npm": ">=5.0.0 <8"
   },
   "scripts": {
     "build": "node-pre-gyp build",
@@ -48,5 +48,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/signalfx/signalfx-nodejs-collect"
-  }
+  },
+  "files": [
+    "src/**/*.js",
+    "cpp/**/*.js",
+    "cpp/**/*.cc",
+    "binding.gyp",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "SECURITY.md"
+  ]
 }
