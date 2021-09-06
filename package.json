@@ -3,9 +3,25 @@
   "version": "2.0.0-beta3",
   "description": "SignalFx library to collect nodejs metrics and report to SignalFx",
   "main": "src/index.js",
+  "engines": {
+    "node": ">=8.0.0 <17",
+    "npm": ">=5.0.0 <7"
+  },
   "scripts": {
+    "build": "node-pre-gyp build",
+    "install": "node-pre-gyp install --fallback-to-build",
+    "lint:fix": "eslint src --fix",
     "lint": "eslint src",
-    "test": "mocha"
+    "pretest": "npm run build",
+    "test": "node --expose-gc ./node_modules/.bin/jest",
+    "test:watch": "node --expose-gc ./node_modules/.bin/jest --watch"
+  },
+  "binary": {
+    "module_name": "signalfx-collect-gcstats",
+    "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
+    "remote_path": "./{module_name}/v{version}/{configuration}/",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
+    "host": "https://cdn.signalfx.com/"
   },
   "homepage": "https://signalfx.com",
   "author": {
@@ -13,19 +29,20 @@
     "email": "info@signalfx.com",
     "url": "https://signalfx.com"
   },
-  "license": "Apache Software License v2",
+  "license": "Apache-2.0",
   "dependencies": {
-    "event-loop-stats": "^1.2.0",
+    "event-loop-stats": "^1.3.0",
     "fqdn": "0.0.3",
-    "gc-stats": "^1.4.0",
     "node-memwatch-sfx": "1.0.0-sfx1",
-    "signalfx": "^6.0.1"
+    "signalfx": "^7.4.0",
+    "@mapbox/node-pre-gyp": "^1.0.5"
   },
   "devDependencies": {
-    "assert": "^2.0.0",
-    "chai": "^4.2.0",
+    "body-parser": "^1.19.0",
     "eslint": "^6.0.1",
-    "mocha": "^6.1.4",
+    "eslint-plugin-jest": "^24.4.0",
+    "express": "^4.17.1",
+    "jest": "^25.5.4",
     "sinon": "^7.3.2"
   },
   "repository": {

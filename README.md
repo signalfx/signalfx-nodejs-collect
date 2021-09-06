@@ -1,3 +1,12 @@
+<p align="center">
+  <a href="https://github.com/signalfx/signalfx-nodejs/releases">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/signalfx/signalfx-nodejs?include_prereleases&style=for-the-badge">
+  </a>
+  <img alt="GitHub branch checks state" src="https://img.shields.io/github/checks-status/signalfx/signalfx-nodejs/main?style=for-the-badge">
+  <img alt="npm" src="https://img.shields.io/npm/v/signalfx?style=for-the-badge">
+  <img alt="node-current" src="https://img.shields.io/node/v/signalfx?style=for-the-badge">
+</p>
+
 # SignalFx Node.js Collect
 
 The SignalFx Node.js Collect is a library to monitor a Node.js application. It collects metrics about CPU utilization, memory usage, event loop, memory leaks, garbage collection and HTTP requests.
@@ -11,12 +20,7 @@ $ npm install signalfx-collect
 
 ## Usage
 
-Requires:
-+ Node 8 - 11
-+ NPM 5 - 6
-
 To use this library, you need a SignalFx org access token. For more information on access tokens, see the API's [Authentication documentation](https://developers.signalfx.com/basics/authentication.html). If your organization is currently sending metrics to SignalFx through [SignalFx Node.js client](https://github.com/signalfx/signalfx-nodejs), you can provide a preconfigured client object instead of an org access token.
-
 
 The code example below is how to import signalfx-collect and start collecting metrics. Collect HTTP request metrics by registering middleware to your express application as shown in the example code below.
 
