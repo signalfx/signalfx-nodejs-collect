@@ -1,4 +1,9 @@
 >ℹ️&nbsp;&nbsp;SignalFx was acquired by Splunk in October 2019. See [Splunk SignalFx](https://www.splunk.com/en_us/investor-relations/acquisitions/signalfx.html) for more information.
+> # :warning: End of Support (EOS) Notice
+> **The SignalFx Node.js Collect package has reached End of Support and has been permanently archived.**
+>
+>The [Splunk Distribution of OpenTelemetry for Node.Js](https://github.com/signalfx/splunk-otel-java) is the successor.
+---
 
 <p align="center">
   <a href="https://github.com/signalfx/signalfx-nodejs-collect/releases">
